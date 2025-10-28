@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->dateTime('date');
+            $table->date('date');
             $table->string('location');
             $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
