@@ -87,5 +87,5 @@ $middleware->alias([
 ]);
 ```
 
+## Testing
 - Run: `php artisan test`
-for test use `php artisan test --filter=PaymentFeatureTest`
