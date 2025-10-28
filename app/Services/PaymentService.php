@@ -10,7 +10,6 @@ class PaymentService
 
         return [
             'status' => $success ? 'success' : 'failed',
-            'transaction_id' => 'TXN_' . uniqid(),
             'amount' => $amount,
         ];
     }

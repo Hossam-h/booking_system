@@ -8,6 +8,7 @@ use App\Services\PaymentService;
 use App\Notifications\BookingConfirmedNotification;
 use App\Models\Booking;
 use App\Http\Requests\API\PaymentRequest;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends BaseController
 {
@@ -31,7 +32,8 @@ class PaymentController extends BaseController
             return $this->sendError('Payment already processed');
         }
 
-        $amount = $booking->total_amount;
+        DB::beginTransaction();
+        $amount = (float) ($booking->ticket->price * $booking->quantity);
         $result = $this->paymentService->processPayment($amount);
 
         $payment = Payment::create([
@@ -45,6 +47,7 @@ class PaymentController extends BaseController
             $booking->user->notify(new BookingConfirmedNotification($booking));
         }
 
+        DB::commit();
         return $this->sendResponse($payment, 'Payment processed successfully');
     }
 
